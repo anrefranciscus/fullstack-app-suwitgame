@@ -1,0 +1,43 @@
+.heading {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar {
+    position: relative;
+    width: 50%;
+  }
+  
+  .avatar img {
+    position: relative;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 100%;
+  }
+  
+  .avatarBackground {
+    position: absolute;
+    background-color: var(--bs-primary);
+    height: 4rem;
+    width: 4rem;
+    top: 0.5rem;
+    left: 0.5rem;
+    border-radius: 100%;
+  }
+  
+  .name {
+    font-weight: 600;
+    color: var(--bs-primary);
+  }
+  
+  .level {
+    font-weight: normal;
+    color: var(--bs-gray);
+  }
+  
+  .opponent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  

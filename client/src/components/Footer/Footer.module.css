@@ -1,0 +1,23 @@
+.footerNavigation {
+    display: flex;
+    justify-content: center;
+}
+
+.footerNavigation a {
+    margin: 0 1rem;
+    font-weight: bold;
+    color: var(--bs-light) !important;
+    text-transform: uppercase;
+}
+
+.footerDivider {
+    height: 1px;
+    background-color: var(--bs-gray);
+    width: 100%;
+}
+
+.footerCopyright {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
