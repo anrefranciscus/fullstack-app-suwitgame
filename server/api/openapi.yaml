@@ -1,0 +1,1133 @@
+openapi: 3.0.0
+info:
+  title: Rock Paper Scissor
+  description: |
+    This is open API for Rock Paper Scissor
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: anrefranciscus@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://mockserver.swaggerhub.com/anrefranciscus/rockPaperScissor/1.0.0
+  description: Mock Server
+security:
+- BearerToken: []
+tags:
+- name: Authentication
+  description: contains operation to register
+- name: PLAYER
+  description: Access to player data
+- name: ADMIN
+  description: endpoint admin
+- name: Users
+  description: Users
+paths:
+  /api/v1/user:
+    post:
+      tags:
+      - Users
+      summary: add user
+      operationId: apiV1UserPOST
+      requestBody:
+        $ref: '#/components/requestBodies/userPostEntities'
+      responses:
+        "200":
+          description: User post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      security: []
+      x-swagger-router-controller: Users
+  /api/v1/user/{id}:
+    put:
+      tags:
+      - Users
+      summary: Update user
+      operationId: apiV1UserIdPUT
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
+      requestBody:
+        $ref: '#/components/requestBodies/userPostEntities'
+      responses:
+        "200":
+          description: User post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      security: []
+      x-swagger-router-controller: Users
+    delete:
+      tags:
+      - Users
+      summary: Delete user by id"
+      operationId: apiV1UserIdDELETE
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
+      responses:
+        "200":
+          description: delete user responses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+      security: []
+      x-swagger-router-controller: Users
+  /api/v1/login:
+    post:
+      tags:
+      - Authentication
+      summary: Login Player
+      operationId: apiV1LoginPOST
+      requestBody:
+        $ref: '#/components/requestBodies/loginEntities'
+      responses:
+        "200":
+          description: Login Schema responses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "401":
+          description: Bad credential response body schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+      security: []
+      x-swagger-router-controller: Authentication
+  /api/v1/register:
+    post:
+      tags:
+      - Authentication
+      summary: Register Player
+      operationId: apiV1RegisterPOST
+      requestBody:
+        $ref: '#/components/requestBodies/registerEntities'
+      responses:
+        "200":
+          description: Register
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "422":
+          description: Failed to register response body schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_422'
+      security: []
+      x-swagger-router-controller: Authentication
+  /api/v1/player:
+    get:
+      tags:
+      - PLAYER
+      summary: get all player
+      operationId: getAllPlayer
+      parameters:
+      - name: point-min
+        in: query
+        description: The minimum number of point find you want to find
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: point-max
+        in: query
+        description: The maximum number of point find you want to find
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: level
+        in: query
+        description: The level of the player you want to find
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: response get all player
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAllPlayer'
+      security: []
+      x-swagger-router-controller: PLAYER
+  /api/v1/player/biodata:
+    post:
+      tags:
+      - PLAYER
+      summary: fill in bio
+      operationId: apiV1PlayerBiodataPOST
+      requestBody:
+        $ref: '#/components/requestBodies/biodatasPostEntities'
+      responses:
+        "200":
+          description: Respon create biodata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+      security: []
+      x-swagger-router-controller: PLAYER
+  /api/v1/player/biodata/:username:
+    get:
+      tags:
+      - PLAYER
+      summary: get biodata player
+      operationId: detailBiodataPlayer
+      responses:
+        "201":
+          description: player get biodata response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/biodatasEntities'
+      security: []
+      x-swagger-router-controller: PLAYER
+  /api/v1/player/room:
+    post:
+      tags:
+      - PLAYER
+      summary: Create Room Game
+      operationId: apiV1PlayerRoomPOST
+      requestBody:
+        $ref: '#/components/requestBodies/createRoom'
+      responses:
+        "200":
+          description: Room
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+      security: []
+      x-swagger-router-controller: PLAYER
+  /api/v1/player/room/:id:
+    get:
+      tags:
+      - PLAYER
+      summary: Get room by id
+      operationId: get
+      responses:
+        "200":
+          description: Room
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5'
+        "404":
+          description: response failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+      security: []
+      x-swagger-router-controller: PLAYER
+  /api/v1/player/join-room/:id:
+    put:
+      tags:
+      - PLAYER
+      summary: Join Room By Id
+      operationId: detailRoomId
+      requestBody:
+        $ref: '#/components/requestBodies/joinRoom'
+      responses:
+        "200":
+          description: Join Room Player OPPONENT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_6'
+        "400":
+          description: response failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+      security: []
+      x-swagger-router-controller: PLAYER
+  /api/v1/player/play/:id:
+    post:
+      tags:
+      - PLAYER
+      summary: Play Game
+      operationId: getIdRoom
+      requestBody:
+        $ref: '#/components/requestBodies/gamePlayed'
+      responses:
+        "200":
+          description: Game
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_7'
+        "400":
+          description: response failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+      security: []
+      x-swagger-router-controller: PLAYER
+  /api/v1/admin/getAllUser:
+    get:
+      tags:
+      - ADMIN
+      summary: endpoint to fetch all user data
+      operationId: getAllUser
+      responses:
+        "200":
+          description: example response to get  all users for admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dataUserEntities'
+        "400":
+          description: response failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+      security: []
+      x-swagger-router-controller: ADMIN
+  /api/v1/admin/user/:id:
+    get:
+      tags:
+      - ADMIN
+      summary: detail data user
+      operationId: getUserId
+      responses:
+        "200":
+          description: example response to get detail user for admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/adminDetailUserId'
+        "500":
+          description: response failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+      security: []
+      x-swagger-router-controller: ADMIN
+components:
+  schemas:
+    dataUserEntities:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          type: array
+          example:
+          - id: 1
+            username: anrefranciscus18
+            point: 1800
+            level: CLASS A
+            role_id: 1
+            role_name: ADMIN
+            bio_id: 1
+          - id: 2
+            username: anresihotang
+            point: 100
+            level: NOVICE
+            role_id: 2
+            role_name: Player
+            bio_id: 2
+          - id: 3
+            ussername: anrefranc
+            point: 1200
+            level: CLASS D
+            role_id: 2
+            role_name: Player
+            bio_id: 3
+          items:
+            $ref: '#/components/schemas/responseGetPlayer'
+      example:
+        data:
+        - id: 1
+          username: anrefranciscus18
+          point: 1800
+          level: CLASS A
+          role_id: 1
+          role_name: ADMIN
+          bio_id: 1
+        - id: 2
+          username: anresihotang
+          point: 100
+          level: NOVICE
+          role_id: 2
+          role_name: Player
+          bio_id: 2
+        - id: 3
+          ussername: anrefranc
+          point: 1200
+          level: CLASS D
+          role_id: 2
+          role_name: Player
+          bio_id: 3
+        status: OK
+    adminDetailUserId:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 2
+        user_name:
+          type: string
+          example: Anre
+        role_id:
+          type: integer
+          example: 1
+        role_name:
+          type: string
+          example: Admin
+        avatar_url:
+          type: string
+          example: /assets/profile/anre.png
+        bio:
+          type: string
+          example: aku ganteng sekali
+        phone:
+          type: string
+          example: "085612483322"
+        address:
+          type: string
+          example: "Jl. Ciledug Raya, Petukangan Utara, Pesanggragan Jakarta Selatan,\
+            \ DKI Jakarta 12260"
+      example:
+        role_name: Admin
+        address: "Jl. Ciledug Raya, Petukangan Utara, Pesanggragan Jakarta Selatan,\
+          \ DKI Jakarta 12260"
+        avatar_url: /assets/profile/anre.png
+        user_id: 2
+        role_id: 1
+        user_name: anrefranciscus
+        bio: player baru
+        phone_number: "089533192569"
+        id: 1
+    userEntities:
+      type: object
+      properties:
+        username:
+          type: string
+          example: anrefranciscus18
+        encryptedPassword:
+          type: string
+          example: $2a$11$BJjgbuiWa9BpRkhXfz.ftOFDmhgOQGN0t2MKPZ4HsBo8gWucuBMqy
+        roleId:
+          type: integer
+          example: 1
+    biodatasEntities:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Anre Franciscus
+        bio:
+          type: string
+          example: saya adalah player baru
+        avatarUrl:
+          type: string
+          example: avatarURL
+        phoneNumber:
+          type: string
+          example: "8888888088"
+      example:
+        phoneNumber: "8888888088"
+        avatarUrl: avatarURL
+        name: Anre Franciscus
+        bio: saya adalah player baru
+    tokenEntities:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        refreshToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        expiredAt:
+          type: number
+          description: Time since epoch
+          example: 1232323000
+    responseGetPlayer:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        point:
+          type: integer
+        level:
+          type: string
+        avatarUrl:
+          type: string
+    getAllPlayer:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          type: array
+          example:
+          - id: 1
+            username: anrefranciscus18
+            point: 1800
+            level: CLASS A
+            avatarUrl: /assets/profile/anre.jpg
+          - id: 2
+            username: anre123
+            point: 1200
+            level: CLASS D
+            avatarUrl: /assets/profile/anre.jpg
+          - id: 3
+            username: franciscus18
+            point: 2000
+            level: CANDIDATE MASTER
+            avatarUrl: /assets/profile/franc.png
+          items:
+            $ref: '#/components/schemas/responseGetPlayer'
+      example:
+        data:
+        - id: 1
+          username: anrefranciscus18
+          point: 1800
+          level: CLASS A
+          avatarUrl: /assets/profile/anre.jpg
+        - id: 2
+          username: anre123
+          point: 1200
+          level: CLASS D
+          avatarUrl: /assets/profile/anre.jpg
+        - id: 3
+          username: franciscus18
+          point: 2000
+          level: CANDIDATE MASTER
+          avatarUrl: /assets/profile/franc.png
+        status: OK
+    roomEntities:
+      required:
+      - created_at
+      - player1_username
+      - player2_username
+      - roomMakeByIdPlayer
+      - roomName
+      - roundCount
+      - state
+      - winnerId
+      type: object
+      properties:
+        roomName:
+          type: string
+          example: ROOM_ONE
+        player1_username:
+          type: string
+          example: PLAYER_1
+        player2_username:
+          type: string
+          example: Waiting JOIN Player 2
+        roomMakeByIdPlayer:
+          type: integer
+          example: 1
+        created_at:
+          type: string
+          example: 30-07-2021 12:00 +07:00
+        state:
+          type: boolean
+          example: false
+    roomEntitiesById:
+      required:
+      - created_at
+      - id_room
+      - player1_username
+      - player2_username
+      - roomMakeByIdPlayer
+      - roomName
+      - state
+      type: object
+      properties:
+        id_room:
+          type: integer
+          example: 1
+        roomName:
+          type: string
+          example: ROOM_ONE
+        player1_username:
+          type: string
+          example: PLAYER_1
+        player2_username:
+          type: string
+          example: PLAYER_2
+        roomMakeByIdPlayer:
+          type: integer
+          example: 1
+        created_at:
+          type: string
+          example: 30-07-2021 12:00 ++07:00
+        state:
+          type: boolean
+          example: false
+      example:
+        player1_username: PLAYER_1
+        roomMakeByIdPlayer: 1
+        created_at: 30-07-2021 12:00 ++07:00
+        player2_username: PLAYER_2
+        state: false
+        id_room: 1
+        roomName: ROOM_ONE
+    joinRoomEntities:
+      required:
+      - player2_username
+      type: object
+      properties:
+        player2_username:
+          type: string
+          example: PLAYER_2
+    gameEntities:
+      required:
+      - player1_pick
+      - player2_pick
+      type: object
+      properties:
+        player1_username:
+          $ref: '#/components/schemas/gameEntities_player1_username'
+        player2_username:
+          $ref: '#/components/schemas/gameEntities_player2_username'
+    inline_response_200:
+      type: object
+      properties:
+        username:
+          type: string
+          example: anrefranciscus18
+        encryptedPassword:
+          type: string
+          example: $2a$11$BJjgbuiWa9BpRkhXfz.ftOFDmhgOQGN0t2MKPZ4HsBo8gWucuBMqy
+        roleId:
+          $ref: '#/components/schemas/inline_response_200_roleId'
+      example:
+        roleId:
+          role: PLAYER
+        username: anrefranciscus18
+        encryptedPassword: $2a$11$BJjgbuiWa9BpRkhXfz.ftOFDmhgOQGN0t2MKPZ4HsBo8gWucuBMqy
+    inline_response_200_1:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          $ref: '#/components/schemas/inline_response_200_1_data'
+        message:
+          type: string
+          example: User has been deleted
+      example:
+        data:
+          id: 1
+        message: User has been deleted
+        status: OK
+    inline_response_200_2:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          $ref: '#/components/schemas/tokenEntities'
+      example:
+        data: data
+        status: OK
+    inline_response_401:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          $ref: '#/components/schemas/inline_response_401_data'
+    inline_response_422:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          $ref: '#/components/schemas/inline_response_422_data'
+    inline_response_200_3:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          $ref: '#/components/schemas/biodatasEntities'
+      example:
+        data: data
+        status: OK
+    inline_response_200_4:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          $ref: '#/components/schemas/roomEntities'
+      example:
+        data: data
+        status: OK
+    inline_response_200_5:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          $ref: '#/components/schemas/roomEntitiesById'
+      example:
+        data:
+          player1_username: PLAYER_1
+          roomMakeByIdPlayer: 1
+          created_at: 30-07-2021 12:00 ++07:00
+          player2_username: PLAYER_2
+          state: false
+          id_room: 1
+          roomName: ROOM_ONE
+        status: OK
+    inline_response_404:
+      type: object
+      properties:
+        status:
+          type: string
+          example: FAIL
+        message:
+          type: string
+          example: Request Failed
+    inline_response_200_6:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        data:
+          $ref: '#/components/schemas/roomEntitiesById'
+        message:
+          type: string
+          example: Player 2 join to room
+      example:
+        data:
+          player1_username: PLAYER_1
+          roomMakeByIdPlayer: 1
+          created_at: 30-07-2021 12:00 ++07:00
+          player2_username: PLAYER_2
+          state: false
+          id_room: 1
+          roomName: ROOM_ONE
+        message: Player 2 join to room
+        status: OK
+    inline_response_200_7:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+        game:
+          $ref: '#/components/schemas/inline_response_200_7_game'
+      example:
+        game:
+          result: PLAYER 2 WIN
+          player1_username: PLAYER 1
+          player2_username: PLAYER 2
+          state: false
+          id_room: 10
+          rounds:
+            round1:
+              player2_pick: SCISSORS
+              isWinner: P1 & P2 DRAW
+              player1_pick: SCISSORS
+            round3:
+              player2_pick: SCISSORS
+              isWinner: PLAYER_2
+              player1_pick: PAPER
+            round2:
+              player2_pick: ROCK
+              isWinner: PLAYER_1
+              player1_pick: PAPER
+        status: OK
+    gameEntities_player1_username_round1:
+      properties:
+        player1_pick:
+          type: string
+          example: ROCK
+    gameEntities_player1_username_round2:
+      properties:
+        player1_pick:
+          type: string
+          example: SCISSORS
+    gameEntities_player1_username_round3:
+      properties:
+        player1_pick:
+          type: string
+          example: PAPER
+    gameEntities_player1_username:
+      properties:
+        round1:
+          $ref: '#/components/schemas/gameEntities_player1_username_round1'
+        round2:
+          $ref: '#/components/schemas/gameEntities_player1_username_round2'
+        round3:
+          $ref: '#/components/schemas/gameEntities_player1_username_round3'
+    gameEntities_player2_username_round1:
+      properties:
+        player2_pick:
+          type: string
+          example: ROCK
+    gameEntities_player2_username_round2:
+      properties:
+        player2_pick:
+          type: string
+          example: PAPER
+    gameEntities_player2_username_round3:
+      properties:
+        player2_pick:
+          type: string
+          example: SCISSORS
+    gameEntities_player2_username:
+      properties:
+        round1:
+          $ref: '#/components/schemas/gameEntities_player2_username_round1'
+        round2:
+          $ref: '#/components/schemas/gameEntities_player2_username_round2'
+        round3:
+          $ref: '#/components/schemas/gameEntities_player2_username_round3'
+    inline_response_200_roleId:
+      properties:
+        role:
+          type: string
+          example: PLAYER
+      example:
+        role: PLAYER
+    inline_response_200_1_data:
+      properties:
+        id:
+          type: integer
+          example: 1
+      example:
+        id: 1
+    inline_response_401_data:
+      type: object
+      properties:
+        name:
+          type: string
+          example: UNAUTHORIZED
+        message:
+          type: string
+          enum:
+          - Wrong password!
+          - Email does not exist!
+    inline_response_422_data:
+      type: object
+      properties:
+        name:
+          type: string
+          example: FAILED_TO_REGISTER
+        message:
+          type: string
+          example: Email already exists!
+    inline_response_200_7_game_rounds_round1:
+      properties:
+        player1_pick:
+          type: string
+          example: SCISSORS
+        player2_pick:
+          type: string
+          example: SCISSORS
+        isWinner:
+          type: string
+          example: P1 & P2 DRAW
+      example:
+        player2_pick: SCISSORS
+        isWinner: P1 & P2 DRAW
+        player1_pick: SCISSORS
+    inline_response_200_7_game_rounds_round2:
+      properties:
+        player1_pick:
+          type: string
+          example: PAPER
+        player2_pick:
+          type: string
+          example: ROCK
+        isWinner:
+          type: string
+          example: PLAYER_1
+      example:
+        player2_pick: ROCK
+        isWinner: PLAYER_1
+        player1_pick: PAPER
+    inline_response_200_7_game_rounds_round3:
+      properties:
+        player1_pick:
+          type: string
+          example: PAPER
+        player2_pick:
+          type: string
+          example: SCISSORS
+        isWinner:
+          type: string
+          example: PLAYER_2
+      example:
+        player2_pick: SCISSORS
+        isWinner: PLAYER_2
+        player1_pick: PAPER
+    inline_response_200_7_game_rounds:
+      properties:
+        round1:
+          $ref: '#/components/schemas/inline_response_200_7_game_rounds_round1'
+        round2:
+          $ref: '#/components/schemas/inline_response_200_7_game_rounds_round2'
+        round3:
+          $ref: '#/components/schemas/inline_response_200_7_game_rounds_round3'
+      example:
+        round1:
+          player2_pick: SCISSORS
+          isWinner: P1 & P2 DRAW
+          player1_pick: SCISSORS
+        round3:
+          player2_pick: SCISSORS
+          isWinner: PLAYER_2
+          player1_pick: PAPER
+        round2:
+          player2_pick: ROCK
+          isWinner: PLAYER_1
+          player1_pick: PAPER
+    inline_response_200_7_game:
+      properties:
+        id_room:
+          type: integer
+          example: 10
+        player1_username:
+          type: string
+          example: PLAYER 1
+        player2_username:
+          type: string
+          example: PLAYER 2
+        state:
+          type: boolean
+          example: false
+        rounds:
+          $ref: '#/components/schemas/inline_response_200_7_game_rounds'
+        result:
+          type: string
+          example: PLAYER 2 WIN
+      example:
+        result: PLAYER 2 WIN
+        player1_username: PLAYER 1
+        player2_username: PLAYER 2
+        state: false
+        id_room: 10
+        rounds:
+          round1:
+            player2_pick: SCISSORS
+            isWinner: P1 & P2 DRAW
+            player1_pick: SCISSORS
+          round3:
+            player2_pick: SCISSORS
+            isWinner: PLAYER_2
+            player1_pick: PAPER
+          round2:
+            player2_pick: ROCK
+            isWinner: PLAYER_1
+            player1_pick: PAPER
+  responses:
+    EmailAlreadyExistErrorResponse:
+      description: Failed to register response body schema
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_422'
+    userResponses:
+      description: User post
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200'
+    deletedUser:
+      description: delete user responses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_1'
+    tokenResponses:
+      description: Login Schema responses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_2'
+    CredentialErrorResponse:
+      description: Bad credential response body schema
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_401'
+    biodatasResponses:
+      description: Respon create biodata
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_3'
+    registerResponses:
+      description: Register
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_2'
+    roomResponses:
+      description: Room
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_4'
+    roomResponsesById:
+      description: Room
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_5'
+    joinRoomResponses:
+      description: Join Room Player OPPONENT
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_6'
+    failRequestResponse:
+      description: response failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_404'
+    gameResponses:
+      description: Game
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_200_7'
+  requestBodies:
+    userPostEntities:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/userEntities'
+      required: true
+    loginEntities:
+      content:
+        application/json:
+          schema:
+            required:
+            - email
+            - password
+            type: object
+            properties:
+              email:
+                type: string
+                example: anrefranciscus@gmail.com
+              password:
+                type: string
+                example: "123456"
+      required: true
+    registerEntities:
+      content:
+        application/json:
+          schema:
+            required:
+            - address
+            - avatarUrl
+            - bio
+            - encryptedPassword
+            - name
+            - phoneNumber
+            - role
+            - username
+            type: object
+            properties:
+              username:
+                type: string
+                example: anrefranciscus18
+              encryptedPassword:
+                type: string
+                example: $2a$11$BJjgbuiWa9BpRkhXfz.ftOFDmhgOQGN0t2MKPZ4HsBo8gWucuBMqy
+              role:
+                type: string
+                example: PLAYER
+              name:
+                type: string
+                example: Anre Franciscus
+              bio:
+                type: string
+                example: saya adalah player baru
+              avatarUrl:
+                type: string
+                example: avatarUr
+              phoneNumber:
+                type: string
+                example: "089888888888"
+      required: true
+    createRoom:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/roomEntities'
+      required: true
+    joinRoom:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/joinRoomEntities'
+      required: true
+    gamePlayed:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/gameEntities'
+      required: true
+    biodatasPostEntities:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/biodatasEntities'
+      required: true
+  securitySchemes:
+    BearerToken:
+      type: http
+      description: Retrieve it via Authentication tagged endpoint.
+      scheme: bearer
+      bearerFormat: JWT
